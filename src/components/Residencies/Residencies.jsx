@@ -5,9 +5,8 @@ import "./Residencies.css";
 import data from "../../utils/slider.json";
 import { sliderSettings } from "../../utils/common";
 import PropertyCard from "../PropertyCard/PropertyCard";
-import useProperties from "../../hooks/useProperties"
+import useProperties from "../../hooks/useProperties";
 import { PuffLoader } from "react-spinners";
-
 
 const Residencies = () => {
   const { data, isError, isLoading } = useProperties();
@@ -42,9 +41,9 @@ const Residencies = () => {
 
         <Swiper {...sliderSettings}>
           <SliderButton />
-          {data.slice(10,19).map((card, index) => (
+          {data.slice(10, 19).map((card, index) => (
             <SwiperSlide key={index}>
-              <PropertyCard  card={card} />
+              <PropertyCard card={card} />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -59,8 +58,8 @@ const SliderButton = () => {
   const swiper = useSwiper();
   return (
     <div className="r-buttons">
-      <button onClick={()=> swiper.slidePrev()}>&lt;</button>
-      <button onClick={()=> swiper.slideNext()} >&gt;</button>
+      <button onClick={() => swiper.slidePrev()}>&lt;</button>
+      <button onClick={() => swiper.slideNext()}>&gt;</button>
     </div>
   );
 };
