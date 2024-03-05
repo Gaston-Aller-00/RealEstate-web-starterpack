@@ -6,6 +6,8 @@ import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
+import {ReactQueryDevtools} from "react-query/devtools"
+import "react-toastify/dist/ReactToastify.css";
 // import Residencies from "./components/Residencies/Residencies";
 function App() {
   const queryClient = new QueryClient();
@@ -23,6 +25,7 @@ function App() {
         </Suspense>
       </BrowserRouter>
       <ToastContainer/>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }
