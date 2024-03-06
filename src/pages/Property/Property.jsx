@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";
 import { getProperty } from "../../utils/api";
@@ -7,8 +7,9 @@ import { AiFillHeart } from "react-icons/ai";
 import { FaShower } from "react-icons/fa";
 import { AiTwotoneCar } from "react-icons/ai";
 import { MdLocationPin, MdMeetingRoom } from "react-icons/md";
-
+import Map from "../../components/Map/Map";
 import "./Property.css";
+
 // import Heart from "../../components/Heart/Heart";
 
 const Property = () => {
@@ -17,7 +18,10 @@ const Property = () => {
   const { data, isLoading, isError } = useQuery(["resd", id], () =>
     getProperty(id)
   );
-  console.log(data);
+
+    const [modalOpened,setModalOpened] = useState(false)
+
+
   if (isLoading) {
     return (
       <div className="wrapper">
@@ -85,7 +89,7 @@ const Property = () => {
               {data?.description}
             </span>
             {/* addres de house */}
-            <div className="flexStart" style={{gap:"1rem"}} >
+            <div className="flexStart" style={{ gap: "1rem" }}>
               <MdLocationPin size={25} />
               <span className="secondaryText">
                 {data?.address}
@@ -94,15 +98,18 @@ const Property = () => {
               </span>
             </div>
 
-                {/* booking btn */}
-                <button className="button">
-                    Book your visit
-                </button>
-
+            {/* booking btn */}
+            <button className="button">Book your visit</button>
           </div>
 
           {/* right */}
-          <div className="right">right</div>
+          <div className="map">
+            <Map
+              address={data?.address}
+              city={data?.city}
+              country={data?.country}
+            />
+          </div>
         </div>
       </div>
     </div>
