@@ -13,6 +13,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import UserDetailContext from "../../context/UserDetailContext.js";
 import "./Property.css";
 import BookingModal from "../../components/BookingModal/BookingModal";
+import Heart from "../../components/Heart/Heart.jsx";
 
 // import Heart from "../../components/Heart/Heart";
 
@@ -68,9 +69,9 @@ const Property = () => {
     <div className="wrapper">
       <div className="flexColStart paddings innerWidth property-container">
         {/* like button */}
-        {/* <div className="like">
+         <div className="like">
           <Heart id={id}/>
-        </div> */}
+        </div> 
         <div className="like">
           <AiFillHeart size={24} color="white" />
         </div>
