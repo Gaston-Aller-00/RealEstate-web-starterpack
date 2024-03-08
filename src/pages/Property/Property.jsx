@@ -1,22 +1,22 @@
-import React, { useContext,useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useContext, useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import { getProperty } from "../../utils/api";
+import { useLocation } from "react-router-dom";
+import { getProperty, removeBooking } from "../../utils/api";
 import { PuffLoader } from "react-spinners";
 import { AiFillHeart } from "react-icons/ai";
+import "./Property.css";
+
 import { FaShower } from "react-icons/fa";
 import { AiTwotoneCar } from "react-icons/ai";
 import { MdLocationPin, MdMeetingRoom } from "react-icons/md";
 import Map from "../../components/Map/Map";
 import useAuthCheck from "../../hooks/useAuthCheck";
 import { useAuth0 } from "@auth0/auth0-react";
-import UserDetailContext from "../../context/UserDetailContext.js";
-import "./Property.css";
 import BookingModal from "../../components/BookingModal/BookingModal";
-import Heart from "../../components/Heart/Heart.jsx";
-
-// import Heart from "../../components/Heart/Heart";
-
+import UserDetailContext from "../../context/UserDetailContext.js";
+import { Button } from "@mantine/core";
+import { toast } from "react-toastify";
+import Heart from "../../components/Heart/Heart";
 const Property = () => {
   const { pathname } = useLocation();
   const id = pathname.split("/").slice(-1)[0];
@@ -26,9 +26,9 @@ const Property = () => {
 
   const [modalOpened, setModalOpened] = useState(false);
   const { validateLogin } = useAuthCheck();
-   const { user } = useAuth0();
+  const { user } = useAuth0();
 
-   const {
+  const {
     userDetails: { token, bookings },
     setUserDetails,
   } = useContext(UserDetailContext);
@@ -69,23 +69,21 @@ const Property = () => {
     <div className="wrapper">
       <div className="flexColStart paddings innerWidth property-container">
         {/* like button */}
-         <div className="like">
-          <Heart id={id}/>
-        </div> 
         <div className="like">
-          <AiFillHeart size={24} color="white" />
+          <Heart id={id}/>
         </div>
+
         {/* image */}
         <img src={data?.image} alt="home image" />
 
         <div className="flexCenter property-details">
-          {/* left side  */}
+          {/* left */}
           <div className="flexColStart left">
             {/* head */}
             <div className="flexStart head">
               <span className="primaryText">{data?.title}</span>
               <span className="orangeText" style={{ fontSize: "1.5rem" }}>
-                {data?.price}
+                $ {data?.price}
               </span>
             </div>
 
@@ -96,27 +94,33 @@ const Property = () => {
                 <FaShower size={20} color="#1F3E72" />
                 <span>{data?.facilities?.bathrooms} Bathrooms</span>
               </div>
+
               {/* parkings */}
               <div className="flexStart facility">
                 <AiTwotoneCar size={20} color="#1F3E72" />
-                <span>{data?.facilities?.parking} Parkings</span>
+                <span>{data?.facilities.parkings} Parking</span>
               </div>
+
               {/* rooms */}
               <div className="flexStart facility">
                 <MdMeetingRoom size={20} color="#1F3E72" />
-                <span>{data?.facilities?.bedrooms} Bedrooms</span>
+                <span>{data?.facilities.bedrooms} Room/s</span>
               </div>
             </div>
+
             {/* description */}
+
             <span className="secondaryText" style={{ textAlign: "justify" }}>
               {data?.description}
             </span>
-            {/* addres de house */}
+
+            {/* address */}
+
             <div className="flexStart" style={{ gap: "1rem" }}>
               <MdLocationPin size={25} />
               <span className="secondaryText">
-                {data?.address}
-                {data?.city}
+                {data?.address}{" "}
+                {data?.city}{" "}
                 {data?.country}
               </span>
             </div>
@@ -155,11 +159,9 @@ const Property = () => {
               propertyId={id}
               email={user?.email}
             />
-
-
           </div>
 
-          {/* right */}
+          {/* right side */}
           <div className="map">
             <Map
               address={data?.address}

@@ -3,7 +3,6 @@ import {Avatar, Menu} from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
 const ProfileMenu = ({user, logout}) => {
     const navigate = useNavigate()
-    //componnet pre hecho
   return (
     <Menu>
         <Menu.Target>
